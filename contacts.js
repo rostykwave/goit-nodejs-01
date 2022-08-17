@@ -8,7 +8,7 @@ const contactsPath = path.resolve("./db/contacts.json");
 function listContacts() {
   // ...твій код
   fs.readFile(contactsPath)
-    .then((data) => console.log(data.toString()))
+    .then((data) => console.log(JSON.parse(data)))
     .catch((err) => console.log(err.message));
 }
 
@@ -16,13 +16,9 @@ function getContactById(contactId) {
   // ...твій код
   fs.readFile(contactsPath)
     .then((data) => {
-      const contacts = JSON.parse(data.toString());
-
-      typeof contactId === "string"
-        ? console.log(contacts.find((contact) => contact.id === contactId))
-        : console.log(
-            contacts.find((contact) => contact.id === contactId + "")
-          );
+      const contacts = JSON.parse(data);
+      console.log(contacts.find((contact) => contact.id === contactId));
+      return contacts.find((contact) => contact.id === contactId);
     })
     .catch((err) => console.log(err.message));
 }
@@ -31,16 +27,13 @@ function removeContact(contactId) {
   // ...твій код
   fs.readFile(contactsPath)
     .then((data) => {
-      const contacts = JSON.parse(data.toString());
+      const contacts = JSON.parse(data);
 
-      const newContacts =
-        typeof contactId === "string"
-          ? contacts.filter((contact) => contact.id !== contactId)
-          : contacts.filter((contact) => contact.id !== contactId + "");
+      const updatedContacts = contacts.filter(
+        (contact) => contact.id !== contactId
+      );
 
-      console.log(newContacts);
-      ///Why JSON stringify ? How to write original Array of objects to json file?
-      // fs.writeFile(contactsPath, JSON.stringify(newContacts), "utf8");
+      fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2));
     })
     .catch((err) => console.log(err.message));
 }
@@ -51,26 +44,18 @@ function addContact(name, email, phone) {
     .then((data) => {
       const contacts = JSON.parse(data.toString());
 
-      const newContacts = {
+      const newContact = {
         // id: Nanoid.nanoid(),
         name,
         email,
         phone,
       };
 
-      console.log(newContacts);
-      ///Why JSON stringify ? How to write original Array of objects to json file?
-      //ID???
-      //   fs.writeFile(contactsPath, JSON.stringify(newContacts), "utf8");
+      const updatedContacts = [...contacts, newContact];
+
+      fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2));
     })
     .catch((err) => console.log(err.message));
 }
 
 module.exports = { listContacts, getContactById, removeContact, addContact };
-
-// listContacts();
-// getContactById("1");
-// getContactById(2);
-// removeContact("1");
-// removeContact(2);
-// addContact("Rostyslav", "rostykwave@gmail.com", "0631070647");
