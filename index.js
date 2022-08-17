@@ -5,14 +5,18 @@ const {
   addContact,
 } = require("./contacts");
 
-// listContacts();
-// getContactById("1");
-// getContactById(2);
-// removeContact("1");
-// removeContact(2);
-// addContact("Rostyslav", "rostykwave@gmail.com", "0631070647");
-// index.js
-const argv = require("yargs").argv;
+const { program } = require("commander");
+
+program
+  .option("-a, --action <type>", "choose action")
+  .option("-i, --id <type>", "user id")
+  .option("-n, --name <type>", "user name")
+  .option("-e, --email <type>", "user email")
+  .option("-p, --phone <type>", "user phone");
+
+program.parse(process.argv);
+
+const argv = program.opts();
 
 // TODO: рефакторить
 function invokeAction({ action, id, name, email, phone }) {
@@ -24,14 +28,17 @@ function invokeAction({ action, id, name, email, phone }) {
 
     case "get":
       // ... id
+      getContactById(id);
       break;
 
     case "add":
       // ... name email phone
+      addContact(name, email, phone);
       break;
 
     case "remove":
       // ... id
+      removeContact(id);
       break;
 
     default:

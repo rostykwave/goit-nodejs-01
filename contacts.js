@@ -1,5 +1,6 @@
 const fs = require("fs").promises;
 const path = require("path");
+const Nanoid = require("nanoid");
 
 const contactsPath = path.resolve("./db/contacts.json");
 
@@ -39,7 +40,7 @@ function removeContact(contactId) {
 
       console.log(newContacts);
       ///Why JSON stringify ? How to write original Array of objects to json file?
-      fs.writeFile(contactsPath, JSON.stringify(newContacts), "utf8");
+      // fs.writeFile(contactsPath, JSON.stringify(newContacts), "utf8");
     })
     .catch((err) => console.log(err.message));
 }
@@ -51,7 +52,7 @@ function addContact(name, email, phone) {
       const contacts = JSON.parse(data.toString());
 
       const newContacts = {
-        id: "id generator",
+        id: Nanoid.nanoid(),
         name,
         email,
         phone,
