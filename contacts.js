@@ -1,6 +1,5 @@
 const fs = require("fs").promises;
 const path = require("path");
-// const Nanoid = require("nanoid");
 
 const contactsPath = path.resolve("./db/contacts.json");
 
@@ -45,7 +44,6 @@ function addContact(name, email, phone) {
       const contacts = JSON.parse(data.toString());
 
       const newContact = {
-        // id: Nanoid.nanoid(),
         name,
         email,
         phone,
