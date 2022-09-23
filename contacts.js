@@ -1,46 +1,48 @@
-const fs = require("fs").promises;
-const path = require("path");
+const fs = require('node:fs/promises');
+const path = require('path');
 
-const contactsPath = path.resolve("./db/contacts.json");
+const contactsPath = path.resolve('./db/contacts.json');
 
-// TODO: задокументувати кожну функцію
-function listContacts() {
-  // ...твій код
-  fs.readFile(contactsPath)
-    .then((data) => console.log(JSON.parse(data)))
-    .catch((err) => console.log(err.message));
+async function listContacts() {
+  try {
+    const data = await fs.readFile(contactsPath);
+    const contacts = data.toString();
+    return contacts;
+  } catch (err) {
+    return err;
+  }
+  // fs.readFile(contactsPath)
+  //   .then(data => console.log(JSON.parse(data)))
+  //   .catch(err => console.log(err.message));
 }
 
 function getContactById(contactId) {
-  // ...твій код
   fs.readFile(contactsPath)
-    .then((data) => {
+    .then(data => {
       const contacts = JSON.parse(data);
-      console.log(contacts.find((contact) => contact.id === contactId));
-      return contacts.find((contact) => contact.id === contactId);
+      console.log(contacts.find(contact => contact.id === contactId));
+      return contacts.find(contact => contact.id === contactId);
     })
-    .catch((err) => console.log(err.message));
+    .catch(err => console.log(err.message));
 }
 
 function removeContact(contactId) {
-  // ...твій код
   fs.readFile(contactsPath)
-    .then((data) => {
+    .then(data => {
       const contacts = JSON.parse(data);
 
       const updatedContacts = contacts.filter(
-        (contact) => contact.id !== contactId
+        contact => contact.id !== contactId
       );
 
       fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2));
     })
-    .catch((err) => console.log(err.message));
+    .catch(err => console.log(err.message));
 }
 
 function addContact(name, email, phone) {
-  // ...твій код
   fs.readFile(contactsPath)
-    .then((data) => {
+    .then(data => {
       const contacts = JSON.parse(data.toString());
 
       const newContact = {
@@ -53,7 +55,7 @@ function addContact(name, email, phone) {
 
       fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2));
     })
-    .catch((err) => console.log(err.message));
+    .catch(err => console.log(err.message));
 }
 
 module.exports = { listContacts, getContactById, removeContact, addContact };
