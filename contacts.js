@@ -37,18 +37,6 @@ async function removeContact(contactId) {
   } catch (err) {
     return err;
   }
-
-  // fs.readFile(contactsPath)
-  //   .then(data => {
-  //     const contacts = JSON.parse(data);
-
-  //     const updatedContacts = contacts.filter(
-  //       contact => contact.id !== contactId
-  //     );
-
-  //     fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2));
-  //   })
-  //   .catch(err => console.log(err.message));
 }
 
 async function addContact(name, email, phone) {
