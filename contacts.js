@@ -30,12 +30,20 @@ async function removeContact(contactId) {
   try {
     const data = await fs.readFile(contactsPath);
     const contacts = JSON.parse(data);
-    const updatedContacts = contacts.filter(
-      contact => contact.id !== contactId
+
+    const removedContactByID = contacts.find(
+      contact => contact.id === contactId
     );
 
-    fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2));
-    return contactId;
+    if (removedContactByID) {
+      const updatedContacts = contacts.filter(
+        contact => contact.id !== contactId
+      );
+
+      fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2));
+    }
+
+    return removedContactByID;
   } catch (err) {
     console.log('Error: ', err.message);
     return err;

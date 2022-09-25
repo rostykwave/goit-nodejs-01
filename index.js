@@ -49,8 +49,8 @@ async function invokeAction({ action, id, name, email, phone }) {
 
     case 'remove':
       try {
-        const removedContactID = await removeContact(id);
-        console.log(`Contact with id ${removedContactID} removed.`);
+        const removedContactByID = await removeContact(id);
+        console.log(`Contact with id ${removedContactByID} removed.`);
       } catch (error) {
         console.log(error);
       }
