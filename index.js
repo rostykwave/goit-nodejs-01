@@ -41,7 +41,7 @@ async function invokeAction({ action, id, name, email, phone }) {
     case 'add':
       try {
         const addedContact = await addContact(name, email, phone);
-        console.log(`Contact with id ${addedContact.id} added.`);
+        console.log(`Contact with id ${addedContact.id} added.`, addedContact);
       } catch (error) {
         console.log(error);
       }
@@ -63,7 +63,6 @@ async function invokeAction({ action, id, name, email, phone }) {
       } catch (error) {
         console.log(error);
       }
-
       break;
 
     default:

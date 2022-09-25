@@ -7,6 +7,7 @@ async function listContacts() {
   try {
     const data = await fs.readFile(contactsPath);
     const contacts = JSON.parse(data);
+
     return contacts;
   } catch (err) {
     console.log('Error: ', err.message);
@@ -19,6 +20,7 @@ async function getContactById(contactId) {
     const data = await fs.readFile(contactsPath);
     const contacts = JSON.parse(data);
     const contactById = contacts.find(contact => contact.id === contactId);
+
     return contactById;
   } catch (err) {
     console.log('Error: ', err.message);
