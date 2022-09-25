@@ -25,17 +25,30 @@ async function getContactById(contactId) {
 }
 
 async function removeContact(contactId) {
-  fs.readFile(contactsPath)
-    .then(data => {
-      const contacts = JSON.parse(data);
+  try {
+    const data = await fs.readFile(contactsPath);
+    const contacts = JSON.parse(data);
+    const updatedContacts = contacts.filter(
+      contact => contact.id !== contactId
+    );
 
-      const updatedContacts = contacts.filter(
-        contact => contact.id !== contactId
-      );
+    fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2));
+    return contactId;
+  } catch (err) {
+    return err;
+  }
 
-      fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2));
-    })
-    .catch(err => console.log(err.message));
+  // fs.readFile(contactsPath)
+  //   .then(data => {
+  //     const contacts = JSON.parse(data);
+
+  //     const updatedContacts = contacts.filter(
+  //       contact => contact.id !== contactId
+  //     );
+
+  //     fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2));
+  //   })
+  //   .catch(err => console.log(err.message));
 }
 
 async function addContact(name, email, phone) {
@@ -52,6 +65,8 @@ async function addContact(name, email, phone) {
     const updatedContacts = [...contacts, newContact];
 
     fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2));
+
+    return newContact;
   } catch (err) {
     return err;
   }
