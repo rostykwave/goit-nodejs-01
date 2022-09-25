@@ -21,23 +21,40 @@ const argv = program.opts();
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case 'list':
-      const contacts = await listContacts();
-      console.log('Contacts list:', contacts);
+      try {
+        const contacts = await listContacts();
+        console.log('Contacts list:', contacts);
+      } catch (error) {
+        console.log(error);
+      }
       break;
 
     case 'get':
-      const contactById = await getContactById(id);
-      console.log('Get Contact By Id:', contactById);
+      try {
+        const contactById = await getContactById(id);
+        console.log('Get Contact By Id:', contactById);
+      } catch (error) {
+        console.log(error);
+      }
       break;
 
     case 'add':
-      const addedContact = await addContact(name, email, phone);
-      console.log(`Contact with id ${addedContact.id} added.`);
+      try {
+        const addedContact = await addContact(name, email, phone);
+        console.log(`Contact with id ${addedContact.id} added.`);
+      } catch (error) {
+        console.log(error);
+      }
       break;
 
     case 'remove':
-      const removedContactID = await removeContact(id);
-      console.log(`Contact with id ${removedContactID} removed.`);
+      try {
+        const removedContactID = await removeContact(id);
+        console.log(`Contact with id ${removedContactID} removed.`);
+      } catch (error) {
+        console.log(error);
+      }
+
       break;
 
     default:

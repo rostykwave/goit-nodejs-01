@@ -9,6 +9,7 @@ async function listContacts() {
     const contacts = JSON.parse(data);
     return contacts;
   } catch (err) {
+    console.log('Error: ', err.message);
     return err;
   }
 }
@@ -20,6 +21,7 @@ async function getContactById(contactId) {
     const contactById = contacts.find(contact => contact.id === contactId);
     return contactById;
   } catch (err) {
+    console.log('Error: ', err.message);
     return err;
   }
 }
@@ -35,6 +37,7 @@ async function removeContact(contactId) {
     fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2));
     return contactId;
   } catch (err) {
+    console.log('Error: ', err.message);
     return err;
   }
 }
@@ -56,6 +59,7 @@ async function addContact(name, email, phone) {
 
     return newContact;
   } catch (err) {
+    console.log('Error: ', err.message);
     return err;
   }
 }
