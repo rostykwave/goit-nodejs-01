@@ -21,51 +21,32 @@ const argv = program.opts();
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case 'list':
-      try {
-        const contacts = await listContacts();
-        console.log('Contacts list:', contacts);
-      } catch (error) {
-        console.log(error);
-      }
+      const contacts = await listContacts();
+      console.log('Contacts list:', contacts);
       break;
 
     case 'get':
-      try {
-        const contactById = await getContactById(id);
-        console.log('Get Contact By Id:', contactById);
-      } catch (error) {
-        console.log(error);
-      }
+      const contactById = await getContactById(id);
+      console.log('Get Contact By Id:', contactById);
       break;
 
     case 'add':
-      try {
-        const addedContact = await addContact(name, email, phone);
-        console.log(
-          `Contact with id ${addedContact.id} is added.`,
-          addedContact
-        );
-      } catch (error) {
-        console.log(error);
-      }
+      const addedContact = await addContact(name, email, phone);
+      console.log(`Contact with id ${addedContact.id} is added.`, addedContact);
       break;
 
     case 'remove':
-      try {
-        const removedContactByID = await removeContact(id);
+      const removedContactByID = await removeContact(id);
 
-        if (removedContactByID === -1) {
-          console.log(`Contact with id ${id} is not found.`);
-          return;
-        }
-
-        console.log(
-          `Contact with id ${removedContactByID.id} is removed.`,
-          removedContactByID
-        );
-      } catch (error) {
-        console.log(error);
+      if (removedContactByID === -1) {
+        console.log(`Contact with id ${id} is not found.`);
+        return;
       }
+
+      console.log(
+        `Contact with id ${removedContactByID.id} is removed.`,
+        removedContactByID
+      );
       break;
 
     default:
