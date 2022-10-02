@@ -33,17 +33,18 @@ async function removeContact(contactId) {
     const data = await fs.readFile(contactsPath);
     const contacts = JSON.parse(data);
 
-    const removedContactByID = contacts.find(
+    const indexOfRemovingContact = contacts.findIndex(
       contact => contact.id === contactId
     );
 
-    if (removedContactByID) {
-      const updatedContacts = contacts.filter(
-        contact => contact.id !== contactId
-      );
-
-      fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2));
+    if (indexOfRemovingContact === -1) {
+      return -1;
     }
+
+    const removedContactByID = contacts[indexOfRemovingContact];
+    contacts.splice(indexOfRemovingContact, 1);
+
+    fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
 
     return removedContactByID;
   } catch (err) {
